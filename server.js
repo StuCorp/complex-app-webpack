@@ -6,7 +6,12 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.use(express.static('public'));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(express.static('client/build'));
+app.use(require('./client/controllers/index.js'))
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
